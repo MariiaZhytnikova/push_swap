@@ -11,16 +11,30 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "push_swap.h"
 
-int	main (int argc, char **argv)
+int main(int argc, char **argv)
 {
+    t_stack stack_a;
+    t_stack stack_b;
 
-	if (argc < 2)
-		return (1);
+    if (argc < 2)
+        return (1);
 
-
-
-	return (0);
+    stack_a.size = argc - 1;
+    stack_a.arr = malloc(sizeof(int) * stack_a.size);
+    if (!stack_a.arr)
+        return (1);
+    stack_b.size = 0;
+    stack_b.arr = malloc(sizeof(int) * stack_b.size);
+    if (!stack_b.arr)
+        return (1);
+    if (parse_args(argv, &stack_a))
+        return (1);
+    push_swap(&stack_a, &stack_b);
+    free_stack(&stack_a);
+    free_stack(&stack_b);
+    return (0);
 }
 
 
