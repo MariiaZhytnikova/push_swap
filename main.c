@@ -40,19 +40,17 @@ int	main(int argc, char **argv) // need to add the function for error
 	if (!stack_b.arr)
 		return (1);
 	ft_mapping(&stack_a);
-	printf("Stack A\n");
-		i = 0;
+	push_swap(&stack_a, &stack_b);
+	i = 0;
 	while (i < stack_a.size)
 	{
-		printf("%d\n", stack_a.arr[i]);
+		printf("Stack A: %d\n", stack_a.arr[i]);
 		i++;
 	}
-
-	printf("Stack B\n");
 	i = 0;
-	while (i < stack_b.size)
+		while (i < stack_b.size)
 	{
-		printf("%d\n", stack_b.arr[i]);
+		printf("Stack B: %d\n", stack_b.arr[i]);
 		i++;
 	}
 //	ft_ra_rb_rr(&stack_a, &stack_a, 3);
@@ -66,3 +64,16 @@ int	main(int argc, char **argv) // need to add the function for error
 //	free_stack(&stack_b);
 	return (0);
 }
+
+/*required: sort   3 numbers with <=     3 operations
+required: sort   5 numbers with <=    12 operations
+scored:   sort 100 numbers with <=   700 operations   max score
+                                     900 operations
+                                    1100 operations
+                                    1300 operations
+                                    1500 operations   min score
+scored:   sort 500 numbers with <=  5500 operations   max score
+                                    7000 operations
+                                    8500 operations
+                                   10000 operations
+                                   11500 operations   min score*/
