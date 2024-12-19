@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:43:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/18 16:58:01 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:59:40 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,17 @@ static void ft_sort_five(t_stack *stack_a, t_stack *stack_b)
 	{
 		ft_min_first(stack_a);
 		ft_pa_pb(stack_a, stack_b, 2);
-		//ft_sort_three(stack_a);
+		ft_sort_three(stack_a);
 		ft_pa_pb(stack_a, stack_b, 1);
 	}
 	else if (stack_a->size == 5 && !ft_ifsorted(stack_a))
 	{
 		ft_min_first(stack_a);
 		ft_pa_pb(stack_a, stack_b, 2);
+		ft_min_first(stack_a);
+		ft_pa_pb(stack_a, stack_b, 2);
 		ft_sort_three(stack_a);
+		ft_pa_pb(stack_a, stack_b, 1);
 		ft_pa_pb(stack_a, stack_b, 1);
 	}
 }
@@ -108,7 +111,7 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 //	else
 //		sort_radix(stack_a, stack_b);
 }
-/*
+
 /*required: sort   3 numbers with <=     3 operations
 required: sort   5 numbers with <=    12 operations
 scored:   sort 100 numbers with <=   700 operations   max score
