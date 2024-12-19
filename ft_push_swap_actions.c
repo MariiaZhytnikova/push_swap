@@ -89,3 +89,69 @@ void	ft_pa_pb(t_stack *stack_a, t_stack *stack_b, int act)
 		ft_putstr_fd("pb\n", 1);
 	}	
 }
+
+/*
+static void	ft_arr_copy(int **in, int **from, int size)
+{
+	int	i;
+	
+	while (i < size)
+	{
+		in[i] = from[i];
+		i++;
+	}
+}
+
+static void	ft_push(t_stack *in, t_stack *from) // where from
+{
+	int	i;
+	t_stack	temp_from;
+	t_stack	temp_in;
+	
+	if (from->size > 0)
+	{
+		i = in->size;
+		temp_in.size = in->size + 1;
+		temp_in.arr = calloc(in->size + 1, sizeof(int));
+		if (!temp_in.arr)
+			return ;
+		while ( i > 0)
+		{
+			temp_in.arr[i] = in->arr[i - 1];
+			i--;
+		}
+		temp_in.arr[0] = from->arr[0];
+		free(in->arr);
+		in->arr = temp_in.arr;
+		in->size++;
+		i = 0;
+		while (i < in->size)
+		{
+			printf("stack IN after push: %d\n", in->arr[i]);
+			i++;
+		}
+	 	temp_from.size = from->size - 1;
+	 	temp_from.arr = calloc(from->size - 1, sizeof(int));
+	 	if (!temp_from.arr)
+	 		return ;
+		i = 0;
+	 	while (i < temp_from.size)
+	 	{
+	 		temp_from.arr[i] = from->arr[i + 1];
+	 		i++;
+	 	}
+		from->size--;
+	 	free(from->arr);		
+	 	from->arr = temp_from.arr;
+		ft_arr_copy(&from->arr, &temp_from.arr, temp_from.size);
+	 	free(temp_from.arr);
+	 	i = 0;
+	 	while (i < from->size)
+	 	{
+	 		printf("stack from after push: %d\n", from->arr[i]);
+	 		i++;
+	 	}
+	}
+}
+
+*/
