@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:50:42 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/19 21:44:27 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:16:43 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act)
 	}
 }
 
+/* 1 pa (push a): Take the first element at the top of b and put it at the top of a. Do nothing if b is empty.
+   2 pb (push b): Take the first element at the top of a and put it at the top of b. Do nothing if a is empty. */
+
 static int	*ft_arr_copy(int *src, int size)
 {
 	int	i;
@@ -67,14 +70,15 @@ static int	*ft_arr_copy(int *src, int size)
 	return (temp);
 }
 
-static void	ft_push(t_stack *dest, t_stack *src) // where from
+static void	ft_push(t_stack *dest, t_stack *src)
 {
 	int	i;
-	int	temp[++dest->size];
+	int	temp[dest->size + 1];
 	
 	if (src->size > 0)
 	{
-		i = dest->size;
+		dest->size += 1;
+		i = dest->size - 1;
 		while (i > 0)
 		{
 			temp[i] = dest->arr[i - 1];
@@ -84,25 +88,13 @@ static void	ft_push(t_stack *dest, t_stack *src) // where from
 		free(dest->arr);
 		dest->arr = ft_arr_copy(temp, dest->size);
 		i = 0;
-		while (i < dest->size)
-		{
-			printf("stack IN after push: %d\n", dest->arr[i]);
-			i++;
-		}
-		i = 0;
-	 	while (i < src->size)
+	 	while (i < src->size - 1)
 	 	{
-	 		temp[i] = src->arr[i + 1];
+			src->arr[i] = src->arr[i + 1];
 	 		i++;
 	 	}
-	 	free(src->arr);
-		src->arr = ft_arr_copy(temp, --src->size);
-	 	i = 0;
-	 	while (i < src->size)
-	 	{
-	 		printf("stack from after push: %d\n", src->arr[i]);
-	 		i++;
-	 	}
+	 	src->size -= 1;
+		src->arr = ft_arr_copy(src->arr, src->size);
 	}
 }
 
