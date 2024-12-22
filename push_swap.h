@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 14:55:07 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/17 16:57:04 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:02:33 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-//#include "ft_printf.h"
 #include "libft.h"
 #include <stdio.h> // TO DELETE
 
@@ -25,21 +24,16 @@ typedef struct	s_stack
 	int	size;
 }	t_stack;
 
-// void	push_swap(t_stack *stack_a, t_stack *stack_b);
-// void	swap(t_stack *stack);
-// void	push(t_stack *stack_from, t_stack *stack_to);
-// void	rotate(t_stack *stack);
-// void	reverse_rotate(t_stack *stack);
-// void	sort_three(t_stack *stack); // < 3 perebor 4?
-// void	sort_five(t_stack *stack_a, t_stack *stack_b); // 5-100 // chunking
-// void	sort_big(t_stack *stack_a, t_stack *stack_b); // > 100 // Radix sort
-// void	free_stack(t_stack *stack);
-int		ft_parse_one(char *argv, t_stack *stack); // check
-int		ft_parse_ml(char **argv, t_stack *stack); // check
+int		ft_parse_one(char *argv, t_stack *stack);
+int		ft_parse_ml(char **argv, t_stack *stack);
 void	ft_mapping(t_stack *stack);
 void	ft_ra_rb_rr(t_stack *stack_a, t_stack *stack_b, int act);
 void	ft_rra_rrb_rrr(t_stack *stack_a, t_stack *stack_b, int act);
 void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act);
 void	ft_pa_pb(t_stack *stack_a, t_stack *stack_b, int act);
+void	push_swap(t_stack *stack_a, t_stack *stack_b);
+int		ft_ifsorted(t_stack *stack);
+void 	ft_min_first(t_stack *stack);
+void	ft_sort_it(t_stack *stack_a, t_stack *stack_b);
 
 #endif
