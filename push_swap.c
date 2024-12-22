@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:43:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/22 14:02:23 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:27:03 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,5 @@ void	push_swap(t_stack *stack_a, t_stack *stack_b)
 	else if (stack_a->size < 6 && !ft_ifsorted(stack_a))
 		ft_sort_five(stack_a, stack_b);
 	else if (stack_a->size > 5 && !ft_ifsorted(stack_a))
-		ft_sort_it(stack_a, stack_b);
+		ft_sort_big(stack_a, stack_b);
 }
