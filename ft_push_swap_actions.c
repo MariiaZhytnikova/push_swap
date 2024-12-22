@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:50:42 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/22 14:16:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:46:20 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,33 +73,36 @@ static int	*ft_arr_copy(int *src, int size)
 static void	ft_push(t_stack *dest, t_stack *src)
 {
 	int	i;
-	int	temp[dest->size + 1];
+	int	new_dest[dest->size + 1];
+	int	new_src[src->size];
 	
-	if (src->size > 0)
+	if (src->size == 0 && !src->arr)
+		return ;
+	new_dest[0] = src->arr[0];
+	i = 0;
+	while (i < dest->size)
 	{
-		dest->size += 1;
-		i = dest->size - 1;
-		while (i > 0)
-		{
-			temp[i] = dest->arr[i - 1];
-			i--;
-		}
-		temp[0] = src->arr[0];
-		free(dest->arr);
-		dest->arr = ft_arr_copy(temp, dest->size);
-		i = 0;
-	 	while (i < src->size - 1)
-	 	{
-			src->arr[i] = src->arr[i + 1];
-	 		i++;
-	 	}
-	 	src->size -= 1;
-		src->arr = ft_arr_copy(src->arr, src->size);
+		new_dest[i + 1] = dest->arr[i];
+		i++;
 	}
+  i = 0;
+  while (i < src->size - 1)
+  {
+  	new_src[i] = src->arr[i + 1];
+    i++;
+  }
+	src->size--;
+	free(src->arr);
+	src->arr = ft_arr_copy(new_src, src->size);
+	dest->size++;
+	free(dest->arr);
+	dest->arr = ft_arr_copy(new_dest, dest->size);
 }
 
 void	ft_pa_pb(t_stack *stack_a, t_stack *stack_b, int act)
 {
+	if (!stack_a || !stack_b)
+		return ;	
 	if (act == 1)
 	{
 		ft_push(stack_a, stack_b);
@@ -109,5 +112,5 @@ void	ft_pa_pb(t_stack *stack_a, t_stack *stack_b, int act)
 	{
 		ft_push(stack_b, stack_a);
 		ft_putstr_fd("pb\n", 1);
-	}	
+	}
 }
