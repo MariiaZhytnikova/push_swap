@@ -35,9 +35,8 @@ void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act);
 void	ft_pa_pb(t_stack *stack_a, t_stack *stack_b, int act);
 void	push_swap(t_stack *stack_a);
 void	ft_sort_it(t_stack *stack_a, t_stack *stack_b);
-void	sm_rotate(t_stack *target, t_stack *stack, int direction, int a);
-void	ft_smswap(t_stack *a, t_stack *b);
-void    rotate_min_max(t_stack *target, t_stack *stack, int index, int a);
+void	rotate(t_stack *target, t_stack *stack, int direction, int a);
+void	rotate_min_max(t_stack *target, t_stack *stack, int index, int a);
 int		find_min_max_index(t_stack *stack, int flag);
 void	find_cheapest(t_stack *target, t_stack *stack, int a);
 
