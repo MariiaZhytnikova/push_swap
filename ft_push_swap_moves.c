@@ -93,7 +93,8 @@ static void	ft_push(t_stack *dest, t_stack *src)
 	free(src->arr);
 	src->arr = ft_arr_copy(new_src, src->size);
 	dest->size++;
-	free(dest->arr);
+	if (dest->arr)
+		free(dest->arr);
 	dest->arr = ft_arr_copy(new_dest, dest->size);
 }
 
