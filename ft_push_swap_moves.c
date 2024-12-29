@@ -56,6 +56,8 @@ static int	*ft_arr_copy(int *src, int size)
 	int	i;
 	int	*temp;
 
+	if (!src)
+		return (NULL);
 	temp = calloc(size, sizeof(int));
 	if (!temp)
 		return (NULL);
