@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 14:54:55 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/16 10:45:59 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:11:51 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,27 @@ static int	ft_args_check(char *res)
 	return (0);
 }
 
-int	ft_parse_one(char *argv, t_stack *stack)
+t_stack *ft_parse_one(char *argv)
 {
 	int	i;
 	char	**res;
+	t_stack	*stack;
 	
 	res = ft_split(argv, ' ');
 	i = 0;
 	while (res[i])
 	{
 		if (ft_args_check(res[i]) < 0)
-			return (-1);
+			return (NULL);
 		i++;
 	}
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		return (ft_error(1), NULL);
+	stack->size = i;
+	stack->arr = calloc(stack->size, sizeof(int));
+	if (!stack->arr)
+		return (ft_error(1), NULL);
 	i = 0;
 	while (res[i])
 	{
@@ -89,24 +97,30 @@ int	ft_parse_one(char *argv, t_stack *stack)
 	}
 	stack->size = i;
 	if (ft_duplicates(*stack) < 0 || ft_outlimits(*stack, res) < 0)
-		return (-1);
-	return (0);
+		return (NULL);
+	return (stack);
 }
 
 
-int	ft_parse_ml(char **argv, t_stack *stack)
+t_stack	*ft_parse_ml(char **argv)
 {
 	int	i;
-	int	temp;
-
+	t_stack	*stack;
+	
 	i = 1;
 	while (argv[i])
 	{
 		if (ft_args_check(argv[i]) < 0)
-			return (-1);
+			return (NULL);
 		i++;
 	}
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		return (ft_error(1), NULL);
 	stack->size = i - 1;
+	stack->arr = calloc(stack->size, sizeof(int));
+	if (!stack->arr)
+		return (ft_error(1), NULL);
 	i = 0;
 	while (i < stack->size)
 	{
@@ -114,35 +128,6 @@ int	ft_parse_ml(char **argv, t_stack *stack)
 		i++;
 	}
 	if (ft_duplicates(*stack) < 0 || ft_outlimits(*stack, ++argv) < 0)
-		return (-1);
-	return (0);
+		return (NULL);
+	return (stack);
 }
-
-/* Checks: NOT work if OVERFLOW should give ERROR
-test cases:
-
-1 +3 -3 6 5465-4645 
-1 -- 5 6 8 -4
-6 7 8 ++ 5 5
-1 2 3 4 - 5
-1 2 3 + 5 8
-2 56a67 5 7 9
-6 d 4 8 0
-a
-0
-./push_swap 2147483647 2 4 7
-
-./push_swap 99 -2147483648 23 545
-
-./push_swap "2147483647 843 56544 24394"
-
-./push_swap 54867543867438 3
-
-./push_swap -2147483647765 4 5
-
-./push_swap "214748364748385 28 47 29"
-
-Nothing has been specified when strings and int are mixed. It's up to you what you want to do
-
-./push_swap "1 2 4 3" 76 90 "348 05
-*/

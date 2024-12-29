@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Function to generate a random sequence from min to max with a given size
+generate_random_sequence() {
+    local min=$1
+    local max=$2
+    local size=$3
+
+    # Create an array with values from min to max
+    sequence=()
+    for ((i = min; i <= max; i++)); do
+        sequence+=($i)
+    done
+
+    # Shuffle the array using the Fisher-Yates algorithm
+    for ((i = ${#sequence[@]} - 1; i > 0; i--)); do
+        j=$((RANDOM % (i + 1)))
+        # Swap elements
+        temp=${sequence[$i]}
+        sequence[$i]=${sequence[$j]}
+        sequence[$j]=$temp
+    done
+
+    # Print the first $size elements of the shuffled sequence
+    for ((i = 0; i < size && i < ${#sequence[@]}; i++)); do
+        echo -n "${sequence[$i]} "
+    done
+    echo # New line
+}
+
+# Example usage:
+# $ ./generate_random_sequence.sh 1 100 10
+# Generates a random sequence of 10 integers between 1 and 100.
+
+# Parse command-line arguments
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 <min> <max> <size>"
+    exit 1
+fi
+
+min=$1
+max=$2
+size=$3
+
+# Ensure size is valid
+if ((size <= 0)); then
+    echo "Size must be greater than 0."
+    exit 1
+fi
+
+# Ensure min is less than or equal to max
+if ((min > max)); then
+    echo "Error: min must be less than or equal to max."
+    exit 1
+fi
+
+# Generate the random sequence
+generate_random_sequence $min $max $size

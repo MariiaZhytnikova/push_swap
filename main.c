@@ -5,63 +5,67 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 15:01:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/17 17:46:24 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/12/29 11:02:51 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/12/29 16:17:00 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
 #include "push_swap.h"
+
+void	ft_error(int code)
+{
+	if (code == 1)
+	{
+		write(1, "Error\n", 6);
+		write(2, "Error\n", 6);
+	}
+}
+
+int	ft_ifsorted(t_stack *stack)
+{
+	int	i;
+
+	i = 1;
+	while (i < stack->size)
+	{
+		if (stack->arr[i - 1] > stack->arr[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+// void	ft_free(t_stack *stack_a)
 
 int	main(int argc, char **argv) // need to add the function for error
 {
-	t_stack stack_a;
-	t_stack stack_b;
-	int	res;
-	int i;
+	t_stack *stack_a;
 
 	if (argc < 2)
-		return (1);
-	stack_a.size = argc - 1; // initialization and argcheck in separate function
-	stack_a.arr = calloc(stack_a.size, sizeof(int));
-	if (!stack_a.arr)
-		return (1);
+		return (ft_error(1), 1);
 	if (argc == 2)
-		res = ft_parse_one(argv[1], &stack_a);
+		stack_a = ft_parse_one(argv[1]);
 	else
-		res = ft_parse_ml(argv, &stack_a);
-	if (res < 0)
+		stack_a = ft_parse_ml(argv);
+	if (!stack_a)
+		return (ft_error(1), 0);
+	ft_mapping(stack_a);
+	if (!ft_ifsorted(stack_a))
+		push_swap(stack_a);
+	int i = 0;
+	while (i < stack_a->size)
 	{
-		printf("Wrong arguments!\n");
-		return (1);
-	}
-	stack_b.size = stack_a.size;
-	stack_b.arr = calloc(stack_b.size, sizeof(int));
-	if (!stack_b.arr)
-		return (1);
-	ft_mapping(&stack_a);
-	push_swap(&stack_a, &stack_b);
-	i = 0;
-	while (i < stack_a.size)
-	{
-		printf("Stack A: %d\n", stack_a.arr[i]);
+		printf("Stack A after sort: %d\n", stack_a->arr[i]);
 		i++;
 	}
-	i = 0;
-		while (i < stack_b.size)
-	{
-		printf("Stack B: %d\n", stack_b.arr[i]);
-		i++;
-	}
-//	ft_ra_rb_rr(&stack_a, &stack_a, 3);
-//	ft_rra_rrb_rrr(&stack_a, &stack_a, 3);
-
-//	ft_sa_sb_ss(&stack_a, &stack_a, 3);
-//	ft_pa_pb(&stack_a, &stack_b, 2);
-
-//	push_swap(&stack_a, &stack_b);
-//	free_stack(&stack_a);
-//	free_stack(&stack_b);
+	// int i = 0;
+	// while (i < stack_b.size)
+	// {
+	// 	printf("Stack B after sort: %d\n", stack_b.arr[i]);
+	// 	i++;
+	// }
+	// free(stack_a.arr);
+	// free(stack_b.arr);
 	return (0);
 }
 

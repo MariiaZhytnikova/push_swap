@@ -6,25 +6,11 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:43:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/22 21:27:03 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/29 16:10:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int ft_ifsorted(t_stack *stack)
-{
-	int	i;
-
-	i = 1;
-	while (i < stack->size)
-	{
-		if (stack->arr[i - 1] > stack->arr[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static void ft_sort_three(t_stack *stack)
 {
@@ -48,62 +34,69 @@ static void ft_sort_three(t_stack *stack)
 	}
 }
 
-void ft_min_first(t_stack *stack)
-{
-	int	i;
-	int	min;
-
-	min = stack->arr[0];
-	i = 0;
-	while (i < stack->size)
-	{
-	if (stack->arr[i] < min)
-		min = stack->arr[i];
-		i++;
-	}
-	if (i < 3)
-	{
-		while (stack->arr[0] != min)
-			ft_ra_rb_rr(stack, NULL, 1);
-	}
-	else
-	{
-		while (stack->arr[0] != min)
-			ft_rra_rrb_rrr(stack, NULL, 1);
-	}
-}
-
 static void ft_sort_five(t_stack *stack_a, t_stack *stack_b)
 {
+	int	index;
+	
 	if (stack_a->size == 4)
 	{
-		ft_min_first(stack_a);
+		index = find_min_max_index(stack_a, 0);
+		rotate_min_max(stack_a, stack_b, index, 0);
 		ft_pa_pb(stack_a, stack_b, 2);
 		ft_sort_three(stack_a);
 		ft_pa_pb(stack_a, stack_b, 1);
 	}
 	else if (stack_a->size == 5)
 	{
-		ft_min_first(stack_a);
-		ft_pa_pb(stack_a, stack_b, 2);
-		ft_min_first(stack_a);
-		ft_pa_pb(stack_a, stack_b, 2);
+		while (stack_a->size != 3)
+		{
+			index = find_min_max_index(stack_a, 0);
+			rotate_min_max(stack_a, stack_b, index, 0);
+			ft_pa_pb(stack_a, stack_b, 2);
+		}
 		ft_sort_three(stack_a);
-		ft_pa_pb(stack_a, stack_b, 1);
+		while (stack_b->size > 0)
+			ft_pa_pb(stack_a, stack_b, 1);
+	}
+}
+
+void	ft_sort_it(t_stack *stack_a, t_stack *stack_b)
+{
+	int	index;
+
+	ft_pa_pb(stack_a, stack_b, 2); // Push two elements in stack B or push Just one, why push two? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+	ft_pa_pb(stack_a, stack_b, 2); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	while (stack_a->size > 0)
+	{
+		find_cheapest(stack_a, stack_b, 0);
+		ft_pa_pb(stack_a, stack_b, 2);
+	}
+	while (stack_b->size > 0) // Push two elements from stack B back to A
+	{
+		ft_smswap(stack_a, stack_b);  // DELETEEEEEEEEEEEEE CHECKKKKKKKKKKKK	
+		index = find_min_max_index(stack_b, 1);
+		rotate_min_max(stack_b, stack_a, index, 1);
 		ft_pa_pb(stack_a, stack_b, 1);
 	}
 }
 
-void	push_swap(t_stack *stack_a, t_stack *stack_b)
+void	push_swap(t_stack *stack_a)
 {
+	t_stack	*stack_b;
+	
+	stack_b = malloc(sizeof(t_stack));
+	if (!stack_b)
+		return (ft_error(1));
 	if (stack_a->size == 2 && !ft_ifsorted(stack_a))
 	{
 		ft_sa_sb_ss(stack_a, NULL, 1);
 	}
 	else if (stack_a->size == 3 && !ft_ifsorted(stack_a))
 		ft_sort_three(stack_a);
-	else if (stack_a->size < 6 && !ft_ifsorted(stack_a))
+	else if (stack_a->size <= 5 && !ft_ifsorted(stack_a))
 		ft_sort_five(stack_a, stack_b);
 	else if (stack_a->size > 5 && !ft_ifsorted(stack_a))
-		ft_sort_big(stack_a, stack_b);
+	{
+		ft_sort_it(stack_a, stack_b);
+	}
 }

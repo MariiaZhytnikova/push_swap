@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_push_swap_actions.c                             :+:      :+:    :+:   */
+/*   ft_push_swap_moves.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:50:42 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/22 20:46:20 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/29 14:09:09 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static void ft_swap(t_stack *stack)
 
 void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act)
 {
-	int	temp;
-	
 	if (act == 1)
 	{
 		ft_swap(stack_a);
