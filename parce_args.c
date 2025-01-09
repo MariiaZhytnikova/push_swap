@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 14:54:55 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/29 16:11:51 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:46:40 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 static int	ft_outlimits(t_stack stack, char **res)
 {
-	int	i;
+	int		i;
+	char	*cmp;
 
 	i = 0;
 	while (i < stack.size)
 	{
-		if (ft_strncmp(res[i], ft_itoa(stack.arr[i]), ft_strlen(res[i])) != 0)
+		cmp = ft_itoa(stack.arr[i]);
+		if (ft_strncmp(res[i], cmp, ft_strlen(res[i])) != 0)
+		{
+			free(res);
 			return (-1);
+		}
+		free(cmp);
 		i++;
 	}
 	return (0);	

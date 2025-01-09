@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:50:42 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/29 14:09:09 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:47:27 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act)
 /* 1 pa (push a): Take the first element at the top of b and put it at the top of a. Do nothing if b is empty.
    2 pb (push b): Take the first element at the top of a and put it at the top of b. Do nothing if a is empty. */
 
-static int	*ft_arr_copy(int *src, int size)
+int	*ft_arr_copy(int *src, int size)
 {
 	int	i;
 	int	*temp;
@@ -85,25 +85,22 @@ static void	ft_push(t_stack *dest, t_stack *src)
 		new_dest[i + 1] = dest->arr[i];
 		i++;
 	}
-  i = 0;
-  while (i < src->size - 1)
-  {
-  	new_src[i] = src->arr[i + 1];
-    i++;
-  }
+	i = 0;
+	while (i < src->size - 1)
+	{
+		new_src[i] = src->arr[i + 1];
+	i++;
+	}
 	src->size--;
 	free(src->arr);
 	src->arr = ft_arr_copy(new_src, src->size);
 	dest->size++;
-	if (dest->arr)
-		free(dest->arr);
+	free(dest->arr);
 	dest->arr = ft_arr_copy(new_dest, dest->size);
 }
 
 void	ft_pa_pb(t_stack *stack_a, t_stack *stack_b, int act)
 {
-	if (!stack_a || !stack_b)
-		return ;	
 	if (act == 1)
 	{
 		ft_push(stack_a, stack_b);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rotate_actions.c                                :+:      :+:    :+:   */
+/*   ft_rotate_moves.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:50:42 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/17 17:24:22 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:58:08 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,37 @@
 static void	ft_rotate(t_stack *stack)
 {
 	int	i;
-	int	temp;
+	int	temp[stack->size];
 
-	if (stack->arr[0] && stack->arr[1])
+	if (stack->size < 2)
+		return ;
+	i = 0;
+	while (i < stack->size - 1)
 	{
-		temp = stack->arr[0];
-		i = 0;
-		while (i < stack->size)
-		{
-			stack->arr[i] = stack->arr[i + 1];
-			i++;
-		}
-		stack->arr[stack->size - 1] = temp;
+		temp[i] = stack->arr[i + 1];
+		i++;
 	}
+	temp[i] = stack->arr[0];
+	free(stack->arr);
+	stack->arr = ft_arr_copy(temp, stack->size);
 }
 
 static void	ft_rrotate(t_stack *stack)
 {
 		int	i;
-		int	temp;
+		int	temp[stack->size];
 
-		temp = stack->arr[stack->size - 1];
-		i = stack->size;
-		while (i > 0)
+		if (stack == NULL || stack->arr == NULL)
+			return ;
+		temp[0] = stack->arr[stack->size - 1];
+		i = 1;
+		while (i < stack->size)
 		{
-			stack->arr[i] = stack->arr[i - 1];
-			i--;
+			temp[i] = stack->arr[i - 1];
+			i++;
 		}
-		stack->arr[0] = temp;
+		free(stack->arr);
+		stack->arr = ft_arr_copy(temp, stack->size);
 }
 
 
@@ -75,17 +78,17 @@ void	ft_ra_rb_rr(t_stack *stack_a, t_stack *stack_b, int act)
 
 void	ft_rra_rrb_rrr(t_stack *stack_a, t_stack *stack_b, int act)
 {
-	if (act == 1)
+	if (act == 1 && stack_a->size > 1)
 	{
 		ft_rrotate(stack_a);
 		ft_putstr_fd("rra\n", 1);
 	}
-	if (act == 2)
+	if (act == 2 && stack_b->size > 1)
 	{
 		ft_rrotate(stack_b);
 		ft_putstr_fd("rrb\n", 1);
 	}
-	if (act == 3)
+	if (act == 3 && stack_a->size > 1 && stack_b->size > 1)
 	{
 		ft_rrotate(stack_a);
 		ft_rrotate(stack_b);

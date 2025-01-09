@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:43:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/29 16:10:45 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:04:41 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,22 @@ static void ft_sort_three(t_stack *stack)
 
 static void ft_sort_five(t_stack *stack_a, t_stack *stack_b)
 {
-	int	index;
+	int	min;
 	
 	if (stack_a->size == 4)
 	{
-		index = find_min_max_index(stack_a, 0);
-		rotate_min_max(stack_a, stack_b, index, 0);
-		ft_pa_pb(stack_a, stack_b, 2);
+		min = find_min_max_index(stack_a, 0);
+	 	rotate_target(stack_a, NULL, min, 1);
+	 	ft_pa_pb(stack_a, stack_b, 2);
 		ft_sort_three(stack_a);
-		ft_pa_pb(stack_a, stack_b, 1);
+	 	ft_pa_pb(stack_a, stack_b, 1);
 	}
 	else if (stack_a->size == 5)
 	{
 		while (stack_a->size != 3)
 		{
-			index = find_min_max_index(stack_a, 0);
-			rotate_min_max(stack_a, stack_b, index, 0);
+			min = find_min_max_index(stack_a, 0);
+			rotate_target(stack_a, NULL, min, 1);
 			ft_pa_pb(stack_a, stack_b, 2);
 		}
 		ft_sort_three(stack_a);
@@ -60,73 +60,84 @@ static void ft_sort_five(t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
-/*void	ft_sort_it(t_stack *stack_a, t_stack *stack_b)
+// The chunk size calculation function can be here
+static int	calculate_chunk_size(int n)
 {
-	int	index;
+	if (n < 10)
+		return 3;  // For 6–9 elements, chunk size 3
+	if (n < 30)
+		return 5;  // For 10–19 elements, chunk size 5
+	else if (n < 50)
+		return 10;  // For 20–49 elements, chunk size 5
+	else if (n < 100)
+		return 15; // For 50–99 elements, chunk size 10
+	else
+		return 20; // For 100+ elements, chunk size 20
+}
 
-	ft_pa_pb(stack_a, stack_b, 2); // Push two elements in stack B or push Just one, why push two? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-	ft_pa_pb(stack_a, stack_b, 2); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	while (stack_a->size > 0)
-	{
-		find_cheapest(stack_a, stack_b, 0);
-		ft_pa_pb(stack_a, stack_b, 2);
-	}
-	while (stack_b->size > 0) // Push two elements from stack B back to A
-	{
-		ft_smswap(stack_a, stack_b);  // DELETEEEEEEEEEEEEE CHECKKKKKKKKKKKK	
-		index = find_min_max_index(stack_b, 1);
-		rotate_min_max(stack_b, stack_a, index, 1);
-		ft_pa_pb(stack_a, stack_b, 1);
-	}
-} */
-
-void	ft_sort_it(t_stack *stack_a, t_stack *stack_b)
+static void	ft_sort_it(t_stack *stack_a, t_stack *stack_b)
 {
-	int	index;
+	int	num_ch;
+	int	ch_size;
+	int	ch_max;
+	int	ch_min;
+	int	temp_size;
 
-	(void)index;
-	int i = 0;
-	while (i < stack_b->size)
+	ch_size = calculate_chunk_size(stack_a->size);
+	num_ch = stack_a->size / ch_size;
+	if (stack_a->size > num_ch * ch_size)
+		num_ch++;
+	ch_min = 1;
+	while (num_ch > 0)
 	{
-		printf("Stack B after sort: %d\n", stack_b->arr[i]);
-		i++;
+			temp_size = ch_size;
+		if (num_ch == 1)
+		{
+			ch_max = stack_a->arr[find_min_max_index(stack_a, 1)];
+			temp_size = ch_max - ch_min + 1;
+		}
+		else
+			ch_max = ch_min + ch_size - 1;
+		while (temp_size > 0) // Push CHUNK to B
+		{
+			rotate_target(stack_a, NULL, find_cheapest(stack_a, ch_min, ch_max), 1);
+			ft_pa_pb(stack_a, stack_b, 2);
+			temp_size--;
+		}
+		ch_min = ch_max + 1;
+		num_ch--; // can be add to while condition to remove line if needed
 	}
-	//ft_pa_pb(stack_a, stack_b, 2); // Push two elements in stack B or push Just one, why push two? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-	//ft_pa_pb(stack_a, stack_b, 2); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	while (stack_a->size > 2)
+	// int j = 0;
+	// while (j < stack_b->size)
+	// {
+	// 	printf("stack B: %d\n", stack_b->arr[j]);
+	// 	j++;
+	// }
+	ch_size = calculate_chunk_size(stack_b->size);
+	num_ch = stack_b->size / ch_size;
+	if (stack_b->size > num_ch * ch_size)
+		num_ch++;
+	ch_max = stack_b->size;
+	while (num_ch > 0)
 	{
-		find_cheapest(stack_a, stack_b, 0);
-		printf("stack_b->size: %d <------> stack_a->size: %d\n", stack_b->size, stack_a->size);
-		printf("Zero problem: %d\n", stack_b->arr[0]);
-		ft_pa_pb(stack_a, stack_b, 2);
-		if (stack_b->size >= 2 && stack_b->arr[0] < stack_b->arr[1])
-			ft_sa_sb_ss(NULL, stack_b, 2);
-		else if (stack_b->size >= 2 && stack_b->arr[0] < stack_b->arr[1] && stack_b->arr[0] < stack_b->arr[stack_b->size - 1])
-			rotate(stack_b, NULL, 1, 1);	
+		if (num_ch == 1)
+		{
+			ch_min = 1;
+			ch_size = ch_max - ch_min + 1;
+		}
+		else
+			ch_min = ch_max - ch_size + 1;
+		push_sort(stack_a, stack_b, ch_min, ch_max);
+		ch_min = ch_max + 1;
+		num_ch--; // can be add to while condition to remove line if needed
 	}
-	if (stack_a->arr[0] > stack_a->arr[1])
-		ft_sa_sb_ss(stack_a, NULL, 1);	
-	// int i = 0;
-	// while (i < stack_b->size)
-	// {
-	// 	printf("Stack B after sort: %d\n", stack_b->arr[i]);
-	// 	i++;
-	// }
-	// while (stack_b->size > 0)
-	// {
-	// 	if (stack_b->size >= 2 && stack_b->arr[0] < stack_b->arr[1])
-	// 		ft_sa_sb_ss(NULL, stack_b, 2);
-	// 	index = find_min_max_index(stack_b, 1);
-	// 	rotate_min_max(stack_b, stack_a, index, 1);
-	// 	ft_pa_pb(stack_a, stack_b, 1);
-	// }
 }
 
 void	push_swap(t_stack *stack_a)
 {
 	t_stack	*stack_b;
-	
 	stack_b = malloc(sizeof(t_stack));
+	stack_b->arr = malloc(sizeof(int) * 1);
 	stack_b->size = 0;
 	if (!stack_b)
 		return (ft_error(1));
@@ -138,4 +149,6 @@ void	push_swap(t_stack *stack_a)
 		ft_sort_five(stack_a, stack_b);
 	else if (stack_a->size > 5 && !ft_ifsorted(stack_a))
 		ft_sort_it(stack_a, stack_b);
+	free (stack_b->arr);
+	free(stack_b);
 }

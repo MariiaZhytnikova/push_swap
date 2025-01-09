@@ -72,6 +72,54 @@ void	smart_rotate_b(t_stack *b, int n)
 		run_n(RB, NULL, b, b->top - find);
 }
 
+void	smart_rotate_a(t_stack *a, int n)
+{
+	int	find;
+
+	find = a->top;
+	while (find >= 0 && a->array[find] != n)
+		find--;
+	if (find < 0)
+		return ;
+	else if (find < a->top / 2)
+		run_n(RRA, a, NULL, find + 1);
+	else
+		run_n(RA, a, NULL, a->top - find);
+}
+
+
+void	move_min_or_max_to_top(t_stack *b)
+{
+	int	i;
+	int	index[2];
+
+	index[0] = _index(b, min(b));
+	index[1] = _index(b, max(b));
+	if (index[0] < b->top - index[1])
+		i = index[0];
+	else
+		i = index[1];
+	smart_rotate_b(b, b->array[i]);
+}
+
+int	closest_above(t_stack *a, int n)
+{
+	int	k;
+	int	i;
+
+	if (a->top < 0 || n > max(a))
+		return (n);
+	i = 0;
+	k = max(a);
+	while (i <= a->top)
+	{
+		if (a->array[i] > n && a->array[i] < k)
+			k = a->array[i];
+		i++;
+	}
+	return (k);
+}
+
 void	put_in_position(t_stack *a, t_stack *b)
 {
 	int	top_b;
@@ -150,10 +198,6 @@ size_t	get_chunks(t_stack *a);
 void	sort_complex(t_stack *a, t_stack *b);
 
 
- min // need to search it
- max // need to search it
- run_n
- run
 
 
 static int	between(int n, int min, int max)
@@ -203,16 +247,3 @@ void	move_to_top(t_stack *a, int min, int max)
 	smart_rotate_a(a, a->array[i]);
 }
 
-void	move_min_or_max_to_top(t_stack *b)
-{
-	int	i;
-	int	index[2];
-
-	index[0] = _index(b, min(b));
-	index[1] = _index(b, max(b));
-	if (index[0] < b->top - index[1])
-		i = index[0];
-	else
-		i = index[1];
-	smart_rotate_b(b, b->array[i]);
-}
