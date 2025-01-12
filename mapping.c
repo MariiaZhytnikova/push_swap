@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mapping.c                                       :+:      :+:    :+:   */
+/*   mapping.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:36:27 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/17 10:59:14 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:04:54 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	ft_inssort(int *arr, int size)
 	int	i;
 	int	j;
 	int	key;
-	
+
 	i = 1;
 	while (i < size)
 	{
 		key = arr[i];
 		j = i - 1;
-		while (j >=0 && arr[j] > key)
+		while (j >= 0 && arr[j] > key)
 		{
 			arr[j + 1] = arr[j];
 			j--;
@@ -35,30 +35,29 @@ static void	ft_inssort(int *arr, int size)
 
 void	ft_mapping(t_stack *stack)
 {
-	int	sort[stack->size];
-	int	i;
-	int	j;
-	
-	i = 0;
-	while (i < stack->size)
+	int	sort[1024];
+	int	i[2];
+
+	i[1] = 0;
+	while (i[1] < stack->size)
 	{
-		sort[i] = stack->arr[i];
-		i++;
+		sort[i[1]] = stack->arr[i[1]];
+		i[1]++;
 	}
 	ft_inssort(sort, stack->size);
-	i = 0;
-	while(i < stack->size)
+	i[1] = 0;
+	while (i[1] < stack->size)
 	{
-		j = 0;
-		while(j < stack->size)
+		i[0] = 0;
+		while (i[0] < stack->size)
 		{
-			if (stack->arr[i] == sort[j])
+			if (stack->arr[i[1]] == sort[i[0]])
 			{
-				stack->arr[i] = j + 1;
+				stack->arr[i[1]] = i[0] + 1;
 				break ;
 			}
-			j++;
+			i[0]++;
 		}
-		i++;
+		i[1]++;
 	}
 }

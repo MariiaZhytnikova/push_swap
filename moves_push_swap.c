@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_push_swap_moves.c                               :+:      :+:    :+:   */
+/*   moves_push_swap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:50:42 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/30 14:47:27 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:37:39 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/* 1 sa (swap a): If there are 2 numbers, swap the first 2 elements at the top of the stack a.
-   2 sb (swap b ) :  If there are 2 numbers, swap the first 2 elements at the top of the stack b.
-   3 ss : sa and sb at the same time. */
-
-static void ft_swap(t_stack *stack)
+static void	ft_swap(t_stack *stack)
 {
-    int	tmp;
-	
+	int	tmp;
+
 	if (stack->arr[0] && stack->arr[1])
-    {
-        tmp = stack->arr[0];
-        stack->arr[0] = stack->arr[1];
-        stack->arr[1] = tmp;
-    }
+	{
+		tmp = stack->arr[0];
+		stack->arr[0] = stack->arr[1];
+		stack->arr[1] = tmp;
+	}
 }
 
 void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act)
@@ -41,15 +37,12 @@ void	ft_sa_sb_ss(t_stack *stack_a, t_stack *stack_b, int act)
 		ft_putstr_fd("sb\n", 1);
 	}
 	if (act == 3)
-	{	
+	{
 		ft_swap(stack_a);
 		ft_swap(stack_b);
 		ft_putstr_fd("ss\n", 1);
 	}
 }
-
-/* 1 pa (push a): Take the first element at the top of b and put it at the top of a. Do nothing if b is empty.
-   2 pb (push b): Take the first element at the top of a and put it at the top of b. Do nothing if a is empty. */
 
 int	*ft_arr_copy(int *src, int size)
 {
@@ -73,9 +66,9 @@ int	*ft_arr_copy(int *src, int size)
 static void	ft_push(t_stack *dest, t_stack *src)
 {
 	int	i;
-	int	new_dest[dest->size + 1];
-	int	new_src[src->size];
-	
+	int	new_dest[1024];
+	int	new_src[1024];
+
 	if (src->size == 0 && !src->arr)
 		return ;
 	new_dest[0] = src->arr[0];
@@ -89,7 +82,7 @@ static void	ft_push(t_stack *dest, t_stack *src)
 	while (i < src->size - 1)
 	{
 		new_src[i] = src->arr[i + 1];
-	i++;
+		i++;
 	}
 	src->size--;
 	free(src->arr);

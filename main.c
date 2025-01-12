@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 11:02:51 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/09 13:23:08 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/12 18:22:49 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_error(int code)
 {
 	if (code == 1)
 	{
-		write(1, "Error\n", 6);
+		write(2, "Error\n", 6);
 	}
 }
 
@@ -34,11 +34,9 @@ int	ft_ifsorted(t_stack *stack)
 	return (1);
 }
 
-// void	ft_free(t_stack *stack_a)
-
-int	main(int argc, char **argv) // need to add the function for error
+int	main(int argc, char **argv)
 {
-	t_stack *stack_a;
+	t_stack	*stack_a;
 
 	if (argc < 2)
 		return (0);
@@ -51,12 +49,6 @@ int	main(int argc, char **argv) // need to add the function for error
 	ft_mapping(stack_a);
 	if (!ft_ifsorted(stack_a))
 		push_swap(stack_a);
-	int j = 0;
-	while (j < stack_a->size)
-	{
-		printf("sorted: %d\n", stack_a->arr[j]);
-		j++;
-	}
 	if (ft_ifsorted(stack_a))
 		printf("sorted");
 	free(stack_a->arr);

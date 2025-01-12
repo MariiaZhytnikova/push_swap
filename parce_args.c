@@ -6,80 +6,30 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 14:54:55 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/12/30 12:46:40 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/12 18:33:38 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	ft_outlimits(t_stack stack, char **res)
+static t_stack	*init(t_stack *stack, int size)
+{
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		return (ft_error(1), NULL);
+	stack->size = size;
+	stack->arr = calloc(stack->size, sizeof(int));
+	if (!stack->arr)
+		return (ft_error(1), NULL);
+	return (stack);
+}
+
+t_stack	*ft_parse_one(char *argv)
 {
 	int		i;
-	char	*cmp;
-
-	i = 0;
-	while (i < stack.size)
-	{
-		cmp = ft_itoa(stack.arr[i]);
-		if (ft_strncmp(res[i], cmp, ft_strlen(res[i])) != 0)
-		{
-			free(res);
-			return (-1);
-		}
-		free(cmp);
-		i++;
-	}
-	return (0);	
-}
-
-static int	ft_duplicates(t_stack stack)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < stack.size)
-	{
-		j = 0;
-		while (j < stack.size)
-		{
-			if (stack.arr[i] == stack.arr[j] && i != j)
-				return (-1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-static int	ft_args_check(char *res)
-{
-	size_t j;
-	
-	j = 0;
-	while (res[j])
-	{
-		if (ft_isdigit(res[j]))
-			{
-				j++;
-				if (res[j] && !ft_isdigit(res[j]))
-					return (-1);
-			}
-		else
-			if((res[j] == '+' || res[j] == '-') && ft_isdigit(res[j+1]))
-				j++;
-		else
-			return (-1);
-	}
-	return (0);
-}
-
-t_stack *ft_parse_one(char *argv)
-{
-	int	i;
 	char	**res;
 	t_stack	*stack;
-	
+
 	res = ft_split(argv, ' ');
 	i = 0;
 	while (res[i])
@@ -88,13 +38,7 @@ t_stack *ft_parse_one(char *argv)
 			return (NULL);
 		i++;
 	}
-	stack = malloc(sizeof(t_stack));
-	if (!stack)
-		return (ft_error(1), NULL);
-	stack->size = i;
-	stack->arr = calloc(stack->size, sizeof(int));
-	if (!stack->arr)
-		return (ft_error(1), NULL);
+	stack = init(stack, i);
 	i = 0;
 	while (res[i])
 	{
@@ -107,12 +51,11 @@ t_stack *ft_parse_one(char *argv)
 	return (stack);
 }
 
-
 t_stack	*ft_parse_ml(char **argv)
 {
-	int	i;
+	int		i;
 	t_stack	*stack;
-	
+
 	i = 1;
 	while (argv[i])
 	{
@@ -120,13 +63,7 @@ t_stack	*ft_parse_ml(char **argv)
 			return (NULL);
 		i++;
 	}
-	stack = malloc(sizeof(t_stack));
-	if (!stack)
-		return (ft_error(1), NULL);
-	stack->size = i - 1;
-	stack->arr = calloc(stack->size, sizeof(int));
-	if (!stack->arr)
-		return (ft_error(1), NULL);
+	stack = init(stack, i - 1);
 	i = 0;
 	while (i < stack->size)
 	{
