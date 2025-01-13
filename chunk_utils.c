@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:20:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/12 19:41:48 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:09:34 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,47 @@ static int	chunk_size(int n)
 static int	chunk_num(int stack_size, int ch_size)
 {
 	int	num_ch;
-	
+
 	num_ch = stack_size / ch_size;
 	if (stack_size > num_ch * ch_size)
 		num_ch++;
-	return(num_ch);
+	return (num_ch);
+}
+
+static void	chunk_push(t_stack *a, t_stack *b, int min, int max)
+{
+	int	size;
+
+	size = max - min + 1;
+	while (size > 0)
+	{
+		rotate_target(a, NULL, find_cheapest(a, min, max), 0);
+		ft_pa_pb(a, b, 2);
+		size--;
+	}
 }
 
 void	push_a(t_stack *stack_a, t_stack *stack_b)
 {
 	int	num_ch;
 	int	ch_size;
-	int	min_max[2];
-	int	temp_size;
+	int	min;
+	int	max;
 
 	ch_size = chunk_size(stack_a->size);
 	num_ch = chunk_num(stack_a->size, ch_size);
-	min_max[0] = 1;
+	min = 1;
 	while (num_ch > 0)
 	{
-		temp_size = ch_size;
 		if (num_ch == 1)
 		{
-			min_max[1] = stack_a->arr[find_min_max_index(stack_a, 1)];
-			temp_size = min_max[1] - min_max[0] + 1;
+			max = stack_a->arr[find_min_max_index(stack_a, 1)];
+			ch_size = max - min + 1;
 		}
 		else
-			min_max[1] = min_max[0] + ch_size - 1;
-		while (temp_size > 0)
-		{
-			rotate_target(stack_a, NULL, find_cheapest(stack_a, min_max[0], min_max[1]), 0);
-			ft_pa_pb(stack_a, stack_b, 2);
-			temp_size--;
-		}
-		min_max[0] = min_max[1] + 1;
+			max = min + ch_size - 1;
+		chunk_push(stack_a, stack_b, min, max);
+		min = max + 1;
 		num_ch--;
 	}
 }
@@ -73,7 +80,6 @@ void	push_b(t_stack *stack_a, t_stack *stack_b)
 	int	ch_size;
 	int	ch_max;
 	int	ch_min;
-	int	temp_size;
 
 	ch_size = chunk_size(stack_b->size);
 	num_ch = stack_b->size / ch_size;
