@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 11:02:51 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/12 18:22:49 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:40:40 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,7 @@ int	main(int argc, char **argv)
 	ft_mapping(stack_a);
 	if (!ft_ifsorted(stack_a))
 		push_swap(stack_a);
-	if (ft_ifsorted(stack_a))
-		printf("sorted");
 	free(stack_a->arr);
 	free(stack_a);
 	return (0);
 }
-
-/*required: sort   3 numbers with <=     3 operations
-required: sort   5 numbers with <=    12 operations
-scored:   sort 100 numbers with <=   700 operations   max score
-                                     900 operations
-                                    1100 operations
-                                    1300 operations
-                                    1500 operations   min score
-scored:   sort 500 numbers with <=  5500 operations   max score
-                                    7000 operations
-                                    8500 operations
-                                   10000 operations
-                                   11500 operations   min score*/

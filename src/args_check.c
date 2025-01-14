@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 18:29:34 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/12 19:06:48 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:01:53 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	skip_zeros(char *res)
 		i++;
 	while (res[i] == '0' && res[i + 1] != '\0')
 		i++;
-	if (res[i] == '\0')
+	if (res[i] == '0')
 	{
 		res[0] = '0';
 		res[1] = '\0';
@@ -47,7 +47,7 @@ int	ft_outlimits(t_stack stack, char **res)
 		skip_zeros(res[i]);
 		if (ft_strncmp(res[i], cmp, ft_strlen(res[i])) != 0)
 		{
-			free(res);
+			free(cmp);
 			return (-1);
 		}
 		free(cmp);
@@ -68,7 +68,9 @@ int	ft_duplicates(t_stack stack)
 		while (j < stack.size)
 		{
 			if (stack.arr[i] == stack.arr[j] && i != j)
+			{
 				return (-1);
+			}
 			j++;
 		}
 		i++;
@@ -93,7 +95,9 @@ int	ft_args_check(char *res)
 			if ((res[j] == '+' || res[j] == '-') && ft_isdigit(res[j + 1]))
 				j++;
 		else
+		{
 			return (-1);
+		}
 	}
 	return (0);
 }

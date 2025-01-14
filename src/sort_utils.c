@@ -6,14 +6,14 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 14:19:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/12 19:05:46 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:35:52 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <limits.h>
 
-static int	find_best_target(t_stack *stack, int val)
+static int	find_best_target(t_stack *stack, int val) //val 37
 {
 	int	i;
 	int	ind;
@@ -33,6 +33,8 @@ static int	find_best_target(t_stack *stack, int val)
 		}
 		i++;
 	}
+	if (res == INT_MAX)
+		ind = find_min_max_index(stack, 0);
 	return (ind);
 }
 

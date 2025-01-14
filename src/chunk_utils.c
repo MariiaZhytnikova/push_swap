@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:20:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/13 14:09:34 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:27:10 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static int	chunk_size(int n)
 		return (10);
 	else if (n < 100)
 		return (15);
+	else if (n < 250)
+		return (30);
 	else
-		return (20);
+		return (50);
 }
 
 static int	chunk_num(int stack_size, int ch_size)

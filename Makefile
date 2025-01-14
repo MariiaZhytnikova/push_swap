@@ -6,28 +6,46 @@
 #    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 15:05:17 by mzhitnik          #+#    #+#              #
-#    Updated: 2024/12/22 13:09:59 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/01/13 18:17:44 by mzhitnik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-name = push_swap
-CC = cc -Wall -Werror -Wextra
+NAME = push_swap
+CC = cc -Wall -Werror -Wextra -I./inc/
+
+SRCS_PATH = ./src
+OBJS_PATH = ./obj
+LIBFT_PATH = ./libft
+
+LIBFT = $(LIBFT_PATH)/libft.a
+SRCS = $(SRCS_PATH)/main.c $(SRCS_PATH)/parce_args.c $(SRCS_PATH)/args_check.c \
+	$(SRCS_PATH)/mapping.c $(SRCS_PATH)/push_swap.c \
+	$(SRCS_PATH)/moves_push_swap.c $(SRCS_PATH)/moves_rotate.c \
+	$(SRCS_PATH)/chunk_utils.c $(SRCS_PATH)/sort_utils.c $(SRCS_PATH)/costs.c
+OBJS = $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 
 all: $(NAME)
 
-$(NAME):
-	CC $< -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(LIBFT) -o $(NAME)
 
+$(OBJS_PATH):
+	mkdir -p $(OBJS_PATH)
 
+$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c | $(OBJS_PATH)
+	$(CC) -c $< -o $@
 
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_PATH)
 
-.PHONY all clean fclean re
+clean:
+	@rm -rf $(OBJS_PATH)
+	@$(MAKE) -C $(LIBFT_PATH) clean
 
+fclean: clean
+	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_PATH) fclean
 
+re: fclean all
 
-
-
-
-
-
-# gcc -o my_program main.c -I./includes -L./libs -lft (-lft tells the linker to look for libft.a (note that -l removes the lib prefix and .a extension, so libft.a becomes -lft).)
+.PHONY: all clean fclean re

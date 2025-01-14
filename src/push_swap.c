@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:43:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/01/12 18:28:22 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:37:47 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	find_min_max_index(t_stack *stack, int flag)
 	return (index);
 }
 
-static void	ft_sort_three(t_stack *stack)
+void	ft_sort_three(t_stack *stack)
 {
 	if (stack->arr[0] > stack->arr[1] && stack->arr[1] > stack->arr[2])
 	{
