@@ -1,28 +1,72 @@
-## Push Swap
-Push_swap is a project that teaches you about sorting algorithms and how to optimize them. The project involves sorting a stack of integers using a limited set of operations (push, swap and rotate) and minimizing the number of moves. 
+## PushSwap
 
-At the beginning, you must have one stack, called stack a with all your numbers placed next to each other. With the help of the operations below, at the very end, all the numbers in your stack a will have to be sorted. 
+PushSwap is a sorting algorithm implemented as part of the 42 curriculum, designed to sort a stack of integers using a limited set of operations. The goal is to use the fewest number of moves to sort the stack, showcasing algorithm optimization and the efficient use of basic stack operations.
 
-To do this, you can have a second empty stack, called the stack b, on which you can temporarily send elements. Here are the operations you can use (and that you will have to code):
+PushSwap is a challenge from the 42 coding school that requires students to implement an efficient sorting algorithm with a stack-based approach. The sorting must be done with only four operations:
 
-    sa (swap a): Swap the first 2 elements at the top of the stack a. Does nothing if there is only one or none. 
+-    Push (p): Move the top element from one stack to the other.
+-    Swap (s): Swap the top two elements of a stack.
+-    Rotate (r): Move the top element of the stack to the bottom.
+-    Reverse Rotate (rr): Move the bottom element of the stack to the top.
 
-    sb (swap b) : Swap the first 2 elements at the top of the stack b. Does nothing if there is only one or none. 
+The objective is to sort the stack with the fewest number of operations, which requires the implementation of an efficient sorting algorithm.
+How It Works
 
-    ss : sa and sb at the same time. 
+The sorting is done on two stacks: Stack A and Stack B. Stack A contains the unsorted elements, while Stack B is used as auxiliary storage for moving elements between stacks during the sorting process.
 
-    pa (push a): Takes the first element on top of b and puts it on a. Does nothing if b is empty. 
+The program must:
 
-    pb (push b): Takes the first element on top of a and puts it on b. Does nothing if a is empty. 
+-    Sort the stack in ascending order with the fewest moves.
+-    Implement custom algorithms (e.g., optimized versions of selection sort, bubble sort, quicksort, etc.) using only the allowed operations.
 
-    ra (rotate a): Shifts all the elements of the stack a up by one position. The first element becomes the last. 
+Operations
 
-    rb (rotate b) : Shifts all the elements of the stack b one position upwards. The first element becomes the last one. 
+The program uses the following operations:
 
-    rr : ra and rb at the same time. 
+    sa (Swap A): Swap the top two elements of stack A.
+    sb (Swap B): Swap the top two elements of stack B.
+    ss (Swap Both): Perform sa and sb simultaneously.
+    pa (Push A): Push the top element of stack B to stack A.
+    pb (Push B): Push the top element of stack A to stack B.
+    ra (Rotate A): Rotate stack A (move the top element to the bottom).
+    rb (Rotate B): Rotate stack B (move the top element to the bottom).
+    rr (Rotate Both): Perform ra and rb simultaneously.
+    rra (Reverse Rotate A): Reverse rotate stack A (move the bottom element to the top).
+    rrb (Reverse Rotate B): Reverse rotate stack B (move the bottom element to the top).
+    rrr (Reverse Rotate Both): Perform rra and rrb simultaneously.
 
-    rra (reverse rotate a): Shifts all elements of the stack down one position. the stack a. The last element becomes the first. 
+Algorithm Complexity
 
-    rrb (reverse rotate b): Shifts all the elements of the stack b one position downwards. the stack b. The last element becomes the first. 
+The complexity of the push-swap algorithm depends on the number of elements to be sorted. While the worst-case time complexity is generally O(n²) using basic sorting strategies, optimizations can be made to improve performance, potentially reaching O(n log n).
 
-    rrr : rra and rrb at the same time.
+![image](https://github.com/user-attachments/assets/a1438aa9-73a6-4f6e-88fb-2b5c1807ba6c)
+
+Time complexity: O(nlog⁡n)  
+    The algorithm uses efficient sorting techniques that divide the problem into smaller parts, resulting in a log-linear growth pattern.
+
+Space complexity: O(n)
+    The algorithm only uses two stacks (A and B) for sorting, and since it’s using a limited amount of additional memory (excluding the input stack), the space used grows linearly with the number of elements.
+
+Usage
+
+To use the PushSwap program:
+
+Compile the program:
+
+    make
+
+Run the program with a list of integers:
+
+    ./push_swap 10 3 8 1 2 5 4
+
+The program will output the sequence of moves that sorts the stack using the fewest number of operations.
+
+Example:
+
+    sa
+    pb
+    ra
+    ...
+
+The above sequence of moves sorts the stack with the fewest moves.
+Contributing
