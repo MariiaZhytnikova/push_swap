@@ -35,6 +35,14 @@ The program uses the following operations:
     rrb (Reverse Rotate B): Reverse rotate stack B (move the bottom element to the top).
     rrr (Reverse Rotate Both): Perform rra and rrb simultaneously.
 
+The push-swap visualizers like (https://github.com/o-reo/push_swap_visualizer) can be usefull to see how algorithms works.
+![oie_GUGOS3iDZgLH(1)](https://github.com/user-attachments/assets/f200e399-4dc0-4325-b8c2-70ddb91de0c4)
+
+![oie_O4KajfJ2zomP](https://github.com/user-attachments/assets/ad936904-e037-4096-8742-79fbebfd10ec)
+
+![oie_FE7ek2RNH0TT](https://github.com/user-attachments/assets/73a6f1ee-2a1f-4bfc-8356-d6107c395749)
+
+
 Algorithm Complexity
 
 The complexity of the push-swap algorithm depends on the number of elements to be sorted. While the worst-case time complexity is generally O(n²) using basic sorting strategies, optimizations can be made to improve performance, potentially reaching O(n log n).
